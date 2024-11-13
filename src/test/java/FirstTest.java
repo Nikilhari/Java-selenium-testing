@@ -23,6 +23,7 @@ public class FirstTest {
         try {
             registerNewUser(driver);
             loginUser(driver);
+            AddToCart(driver);
         } finally {
             Thread.sleep(10000);
             driver.quit();
@@ -81,5 +82,22 @@ public class FirstTest {
         WebElement logincofirmation = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("maintext")));
         Assert.assertTrue(logincofirmation.getText().contains("MY ACCOUNT"), "Login failed or logout option not displayed.");
         System.out.println("Login test passed.");
+    }
+    public static void AddToCart(WebDriver driver)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        WebElement men = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://automationteststore.com/index.php?rt=product/category&path=58']")));
+        men.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://automationteststore.com/index.php?rt=product/category&path=58_60']"))).click();
+        WebElement addToCartButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//a[@class='productcart'])[1]")));
+        addToCartButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://automationteststore.com/index.php?rt=checkout/cart']"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("cart_checkout1"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("checkout_btn"))).click();
+        WebElement orderConformation = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("maintext")));
+        Assert.assertTrue(orderConformation.getText().contains("CHECKOUT CONFIRMATION"), "CHECK OUT FAILED");
+        System.out.println("Order placed suceessfully");
+
+
     }
 }
