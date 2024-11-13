@@ -11,7 +11,7 @@ target/
 *.iws
 *.iml
 *.ipr
-
+drivers
 ### Eclipse ###
 .apt_generated
 .classpath
