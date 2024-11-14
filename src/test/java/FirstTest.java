@@ -22,7 +22,9 @@ public class FirstTest {
 
         try {
             registerNewUser(driver);
+            Thread.sleep(2000);
             loginUser(driver);
+            Thread.sleep(2000);
             AddToCart(driver);
         } finally {
             Thread.sleep(10000);
@@ -30,19 +32,21 @@ public class FirstTest {
         }
     }
 
-    public static void registerNewUser(WebDriver driver) {
+    public static void registerNewUser(WebDriver driver) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Login or register"))).click();
+        Thread.sleep(1000);
 
         WebElement continueButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@title='Continue']")));
         continueButton.click();
+        Thread.sleep(1000);
 
 
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("AccountFrm_firstname"))).sendKeys("John");
         driver.findElement(By.id("AccountFrm_lastname")).sendKeys("Doe");
-        driver.findElement(By.id("AccountFrm_email")).sendKeys("KKK.doe@example.com");
+        driver.findElement(By.id("AccountFrm_email")).sendKeys("KKKkKK.doe@example.com");
         driver.findElement(By.id("AccountFrm_address_1")).sendKeys("123 Main St");
         driver.findElement(By.id("AccountFrm_city")).sendKeys("Cityville");
 
@@ -50,7 +54,7 @@ public class FirstTest {
 
         driver.findElement(By.id("AccountFrm_postcode")).sendKeys("12345");
         driver.findElement(By.id("AccountFrm_country_id")).sendKeys("United States");
-        driver.findElement(By.id("AccountFrm_loginname")).sendKeys("AS89DFG");
+        driver.findElement(By.id("AccountFrm_loginname")).sendKeys("Pradeeeep");
         driver.findElement(By.id("AccountFrm_password")).sendKeys("password123");
         driver.findElement(By.id("AccountFrm_confirm")).sendKeys("password123");
         driver.findElement(By.id("AccountFrm_newsletter0")).click();
@@ -66,16 +70,18 @@ public class FirstTest {
         System.out.println("Registration test passed.");
     }
 
-    public static void loginUser(WebDriver driver) {
+    public static void loginUser(WebDriver driver) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 
         WebElement logoffButton = wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Logoff")));
         logoffButton.click();
+        Thread.sleep(1000);
 
         System.out.println("Logout option selected.");
         wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Login or register"))).click();
+        Thread.sleep(1000);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginFrm_loginname"))).sendKeys("AS89DFG");
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("loginFrm_loginname"))).sendKeys("Pradeeeep");
         driver.findElement(By.id("loginFrm_password")).sendKeys("password123");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@title='Login']"))).click();
 
@@ -83,20 +89,29 @@ public class FirstTest {
         Assert.assertTrue(logincofirmation.getText().contains("MY ACCOUNT"), "Login failed or logout option not displayed.");
         System.out.println("Login test passed.");
     }
-    public static void AddToCart(WebDriver driver)
-    {
+    public static void AddToCart(WebDriver driver) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
         WebElement men = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://automationteststore.com/index.php?rt=product/category&path=58']")));
         men.click();
+        Thread.sleep(1000);
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://automationteststore.com/index.php?rt=product/category&path=58_60']"))).click();
         WebElement addToCartButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//a[@class='productcart'])[1]")));
         addToCartButton.click();
+        Thread.sleep(1000);
+
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@href='https://automationteststore.com/index.php?rt=checkout/cart']"))).click();
+        Thread.sleep(1000);
+
         wait.until(ExpectedConditions.elementToBeClickable(By.id("cart_checkout1"))).click();
+        Thread.sleep(1000);
+
         wait.until(ExpectedConditions.elementToBeClickable(By.id("checkout_btn"))).click();
+        Thread.sleep(1000);
+
         WebElement orderConformation = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("maintext")));
         Assert.assertTrue(orderConformation.getText().contains("CHECKOUT CONFIRMATION"), "CHECK OUT FAILED");
-        System.out.println("Order placed suceessfully");
+        System.out.println("Order placed successfully");
 
 
     }
